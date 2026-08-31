@@ -1,323 +1,578 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 10th Monthsary! ❤️</title>
-    <style>
-        :root {
-            --primary-color: #ff4d6d;
-            --bg-color: #fff0f3;
-            --text-color: #590d22;
-            --success-color: #2a9d8f;
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Happy 10th Monthsary! ❤️</title>
+<style>
+    :root {
+        --primary-color: #ff4d6d;
+        --bg-color: #fff0f3;
+        --text-color: #590d22;
+        --success-color: #2a9d8f;
+    }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .bg-slideshow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .bg-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+    }
+
+    .bg-slide.active {
+        opacity: 0.35;
+    }
+
+    .bg-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(
+            135deg,
+            rgba(255,240,243,0.4) 0%,
+            rgba(255,255,255,0.2) 100%
+        );
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+        animation: fadeIn 2s ease-in;
+        z-index: 2;
+    }
+
+    .heart {
+        background-color: var(--primary-color);
+        display: inline-block;
+        height: 40px;
+        margin: 25px;
+        position: relative;
+        transform: rotate(-45deg);
+        width: 40px;
+        animation: beat 1s infinite alternate;
+        z-index: 2;
+    }
+
+    .heart:before,
+    .heart:after {
+        content: "";
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        height: 40px;
+        position: absolute;
+        width: 40px;
+    }
+
+    .heart:before {
+        top: -20px;
+        left: 0;
+    }
+
+    .heart:after {
+        left: 20px;
+        top: 0;
+    }
+
+    .card,
+    .question-box {
+        background: rgba(255, 255, 255, 0.92);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
+        max-width: 400px;
+        width: 90%;
+        margin-bottom: 20px;
+        animation: slideUp 1s ease-out forwards;
+        z-index: 2;
+        backdrop-filter: blur(8px);
+    }
+
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        height: 50px;
+        position: relative;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    #yesBtn {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+        background-color: #ff3355;
+    }
+
+    #noBtn {
+        background-color: #ccc;
+        color: #333;
+        position: absolute;
+        left: calc(50% + 10px);
+        z-index: 10;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .celebration {
+        animation: fadeIn 1s ease-in forwards;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* LOCAL MUSIC PLAYER */
+    #musicPlayer {
+        display: none;
+    }
+
+    .heart-fall {
+        position: fixed;
+        top: -10%;
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        user-select: none;
+        pointer-events: none;
+        z-index: 3;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
         }
 
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .bg-slideshow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .bg-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        100% {
+            transform: translateY(110vh) rotate(360deg);
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+        }
+    }
+
+    @keyframes beat {
+        0% {
+            transform: rotate(-45deg) scale(1);
         }
 
-        .bg-slide.active {
-            opacity: 0.35;
+        100% {
+            transform: rotate(-45deg) scale(1.2);
         }
+    }
 
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(255,240,243,0.4) 0%, rgba(255,255,255,0.2) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-            animation: fadeIn 2s ease-in;
-            z-index: 2;
-        }
-
-        .heart {
-            background-color: var(--primary-color);
-            display: inline-block;
-            height: 40px;
-            margin: 25px;
-            position: relative;
-            transform: rotate(-45deg);
-            width: 40px;
-            animation: beat 1s infinite alternate;
-            z-index: 2;
-        }
-
-        .heart:before, .heart:after {
-            content: "";
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            height: 40px;
-            position: absolute;
-            width: 40px;
-        }
-
-        .heart:before { top: -20px; left: 0; }
-        .heart:after { left: 20px; top: 0; }
-
-        .card, .question-box {
-            background: rgba(255, 255, 255, 0.92);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
-            max-width: 400px;
-            width: 90%;
-            margin-bottom: 20px;
-            animation: slideUp 1s ease-out forwards;
-            z-index: 2;
-            backdrop-filter: blur(8px);
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            height: 50px;
-            position: relative;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        #yesBtn {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        #yesBtn:hover {
-            transform: scale(1.1);
-            background-color: #ff3355;
-        }
-
-        #noBtn {
-            background-color: #ccc;
-            color: #333;
-            position: absolute;
-            left: calc(50% + 10px);
-            z-index: 10;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .celebration {
-            animation: fadeIn 1s ease-in forwards;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #youtubeAudioPlayer {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            width: 0;
-            height: 0;
+    @keyframes fadeIn {
+        from {
             opacity: 0;
-            pointer-events: none;
         }
 
-        .heart-fall {
-            position: fixed;
-            top: -10%;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            user-select: none;
-            pointer-events: none;
-            z-index: 3;
-            animation: fall linear forwards;
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
         }
 
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        to {
+            transform: translateY(0);
+            opacity: 1;
         }
+    }
+</style>
 
-        @keyframes beat {
-            0% { transform: rotate(-45deg) scale(1); }
-            100% { transform: rotate(-45deg) scale(1.2); }
-        }
+</head> <body>
+<!-- ==============================
+     BACKGROUND SLIDESHOW
+     ============================== -->
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+<div class="bg-slideshow">
 
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
-</head>
-<body>
+    <img
+        src="IMG_20251122_063834.jpg"
+        class="bg-slide active"
+        alt="Slide 1"
+    >
 
-    <div class="bg-slideshow">
-        <!-- If you uploaded images named pic1.jpg, pic2.jpg, pic3.jpg, leave these. Otherwise, put your file names here. -->
-        <img src="IMG_20251122_063834.jpg" class="bg-slide active" alt="Slide 1">
-        <img src="IMG_20251201_202739.jpg class="bg-slide" alt="Slide 2">
-        <img src="IMG_20251213_192354.jpg" class="bg-slide" alt="Slide 3">
-        <img src="IMG_20251230_213309.jpg" class="bg-slide" alt="Slide 3">
-        <img src="IMG_20260210_100532.jpg" class="bg-slide" alt="Slide 3">
-        <img src="Screenshot_2026-04-22-17-32-29-537_com.mi.android.globallauncher.jpg" class="bg-slide" alt="Slide 3">
-        <img src="Screenshot_2026-07-01-19-53-47-220_com.miui.gallery.jpg" class="bg-slide" alt="Slide 3">
+    <img
+        src="IMG_20251201_202739.jpg"
+        class="bg-slide"
+        alt="Slide 2"
+    >
+
+    <img
+        src="IMG_20251213_192354.jpg"
+        class="bg-slide"
+        alt="Slide 3"
+    >
+
+    <img
+        src="IMG_20251230_213309.jpg"
+        class="bg-slide"
+        alt="Slide 4"
+    >
+
+    <img
+        src="IMG_20260210_100532.jpg"
+        class="bg-slide"
+        alt="Slide 5"
+    >
+
+    <img
+        src="Screenshot_2026-04-22-17-32-29-537_com.mi.android.globallauncher.jpg"
+        class="bg-slide"
+        alt="Slide 6"
+    >
+
+</div>
+
+<div class="bg-overlay"></div>
+
+
+<!-- ==============================
+     LOCAL MP3 MUSIC
+     ============================== -->
+
+<audio
+    id="musicPlayer"
+    loop
+    preload="auto"
+>
+    <source
+        src="Palagi - TJ Monterde (Lyric Video) _ @dhorynmarimon.mp3"
+        type="audio/mpeg"
+    >
+
+    Your browser does not support audio.
+</audio>
+
+
+<!-- ==============================
+     MAIN CONTENT
+     ============================== -->
+
+<div id="mainContent">
+
+    <h1>Happy 10th Monthsary! 🥂</h1>
+
+    <div class="heart"></div>
+
+    <div class="card">
+
+        <p>
+            10 months na tayong magkasama, pero grabe,
+            kinikilig pa rin ako sa'yo araw-araw!
+            May kasama pang kaunting high blood minsan,
+            pero okay lang, worth it naman.
+            Thank you for being my peace, my joy,
+            and my absolute best friend.
+            Sobrang love kita! 🥰❤️
+        </p>
+
     </div>
-    <div class="bg-overlay"></div>
 
-    <div id="youtubeAudioPlayer"></div>
 
-    <div id="mainContent">
-        <h1>Happy 10th Monthsary! 🥂</h1>
-        
-        <div class="heart"></div>
+    <div class="question-box">
 
-        <div class="card">
-            <p>10 months na tayong magkasama, pero grabe, kinikilig pa rin ako sa'yo araw-araw! May kasama pang kaunting high blood minsan, pero okay lang, worth it naman. Thank you for being my peace, my joy, and my absolute best friend. Sobrang love kita! 🥰❤️</p>
+        <h2>
+            Will you legally bind yourself to a lifetime
+            of eating my cooking, laughing at my bad jokes,
+            and being my permanent date? 🍳🥺❤️
+        </h2>
+
+        <div class="btn-container">
+
+            <button
+                class="btn"
+                id="yesBtn"
+                onclick="acceptProposal()"
+            >
+                Yes!
+            </button>
+
+            <button
+                class="btn"
+                id="noBtn"
+                onmouseover="moveNoButton()"
+                onclick="moveNoButton()"
+            >
+                No
+            </button>
+
         </div>
 
-        <div class="question-box">
-            <h2>Will you legally bind yourself to a lifetime of eating my cooking, laughing at my bad jokes, and being my permanent date? 🍳🥺❤️</h2>
-            <div class="btn-container">
-                <button class="btn" id="yesBtn" onclick="acceptProposal()">Yes!</button>
-                <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
-            </div>
-        </div>
     </div>
 
-    <div id="celebrationScreen" class="hidden celebration">
-        <div class="heart"></div>
-        <h1 style="color: var(--success-color);">CONTRACT SIGNED! 💖</h1>
-        <div class="card">
-            <p>Sabi ko na nga ba, marupok ka rin sa akin eh! No cancellations or refunds allowed. Ikaw na ang official lifetime partner ko sa pagkain at sa buhay. I love you endlessly, bff/love! 👩‍❤️‍💋‍👨🔐</p>
-        </div>
+</div>
+
+
+<!-- ==============================
+     CELEBRATION SCREEN
+     ============================== -->
+
+<div
+    id="celebrationScreen"
+    class="hidden celebration"
+>
+
+    <div class="heart"></div>
+
+    <h1 style="color: var(--success-color);">
+        CONTRACT SIGNED! 💖
+    </h1>
+
+    <div class="card">
+
+        <p>
+            Sabi ko na nga ba, marupok ka rin sa akin eh!
+            No cancellations or refunds allowed.
+            Ikaw na ang official lifetime partner ko
+            sa pagkain at sa buhay.
+            I love you endlessly, bff/love! 👩‍❤️‍💋‍👨🔐
+        </p>
+
     </div>
 
-    <script>
-        var tag = document.createElement('script');
-        tag.src = "https://youtube.com";
-        var firstScriptTag = document.getElementsByTagName('script');
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</div>
 
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubeAudioPlayer', {
-                height: '0',
-                width: '0',
-                videoId: 'J0PHsDDjR1M', 
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'loop': 1,
-                    'playlist': 'J0PHsDDjR1M'
-                }
-            });
+
+<script>
+
+    /* ==============================
+       BACKGROUND SLIDESHOW
+       ============================== */
+
+    let currentSlide = 0;
+
+    const slides =
+        document.querySelectorAll('.bg-slide');
+
+    const slideInterval = 4000;
+
+    function nextSlide() {
+
+        if (slides.length > 0) {
+
+            slides[currentSlide]
+                .classList
+                .remove('active');
+
+            currentSlide =
+                (currentSlide + 1) % slides.length;
+
+            slides[currentSlide]
+                .classList
+                .add('active');
+        }
+    }
+
+    setInterval(
+        nextSlide,
+        slideInterval
+    );
+
+
+    /* ==============================
+       FALLING HEARTS
+       ============================== */
+
+    function createFallingHeart() {
+
+        const heart =
+            document.createElement('div');
+
+        heart.classList.add('heart-fall');
+
+        heart.innerText = '❤️';
+
+        heart.style.left =
+            Math.random() * 100 + 'vw';
+
+        heart.style.animationDuration =
+            (Math.random() * 3 + 2) + 's';
+
+        heart.style.fontSize =
+            (Math.random() * 15 + 15) + 'px';
+
+        document.body.appendChild(heart);
+
+        setTimeout(function() {
+            heart.remove();
+        }, 5000);
+    }
+
+    setInterval(
+        createFallingHeart,
+        300
+    );
+
+
+    /* ==============================
+       NO BUTTON
+       ============================== */
+
+    function moveNoButton() {
+
+        const noBtn =
+            document.getElementById('noBtn');
+
+        const maxX =
+            window.innerWidth -
+            noBtn.offsetWidth -
+            40;
+
+        const maxY =
+            window.innerHeight -
+            noBtn.offsetHeight -
+            40;
+
+        const randomX =
+            Math.max(
+                20,
+                Math.floor(
+                    Math.random() * maxX
+                )
+            );
+
+        const randomY =
+            Math.max(
+                20,
+                Math.floor(
+                    Math.random() * maxY
+                )
+            );
+
+        noBtn.style.position = 'fixed';
+
+        noBtn.style.left =
+            randomX + 'px';
+
+        noBtn.style.top =
+            randomY + 'px';
+    }
+
+
+    /* ==============================
+       YES BUTTON
+       ============================== */
+
+    function acceptProposal() {
+
+        const music =
+            document.getElementById('musicPlayer');
+
+        /*
+         * The music starts because this
+         * function is triggered directly
+         * by the user's YES click.
+         */
+
+        music.volume = 1.0;
+
+        const playPromise =
+            music.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise
+                .then(function() {
+
+                    console.log(
+                        "Music started successfully ❤️"
+                    );
+
+                })
+                .catch(function(error) {
+
+                    console.log(
+                        "Music could not start:",
+                        error
+                    );
+
+                });
         }
 
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.bg-slide');
-        const slideInterval = 4000;
 
-        function nextSlide() {
-            if(slides.length > 0) {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }
-        }
-        setInterval(nextSlide, slideInterval);
+        /* Hide main screen */
 
-        function createFallingHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-fall');
-            heart.innerText = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 5000);
-        }
-        setInterval(createFallingHeart, 300);
+        document
+            .getElementById('mainContent')
+            .classList
+            .add('hidden');
 
-        function moveNoButton() {
-            const noBtn = document.getElementById('noBtn');
-            const maxX = window.innerWidth - noBtn.offsetWidth - 40;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 40;
-            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
 
-        function acceptProposal() {
-            if (player && typeof player.playVideo === 'function') {
-                player.unMute();
-                player.playVideo();
-            }
-            document.getElementById('mainContent').classList.add('hidden');
-            document.getElementById('celebrationScreen').classList.remove('hidden');
-            setInterval(createFallingHeart, 70);
-        }
-    </script>
-</body>
-</html>
+        /* Show celebration */
+
+        document
+            .getElementById('celebrationScreen')
+            .classList
+            .remove('hidden');
+
+
+        /* Extra falling hearts */
+
+        setInterval(
+            createFallingHeart,
+            70
+        );
+    }
+
+</script>
+
+</body> </html>
