@@ -28,7 +28,6 @@
             position: relative;
         }
 
-        /* Full Screen Background Slideshow Wrapper */
         .bg-slideshow {
             position: fixed;
             top: 0;
@@ -54,7 +53,6 @@
             opacity: 0.35;
         }
 
-        /* Subtle dark/light blur overlay over images to enhance readability */
         .bg-overlay {
             position: fixed;
             top: 0;
@@ -191,7 +189,6 @@
             animation: fall linear forwards;
         }
 
-        /* Animations */
         @keyframes fall {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
@@ -215,49 +212,45 @@
 </head>
 <body>
 
-    <!-- Background Images Array Structure -->
     <div class="bg-slideshow">
-        <!-- REPLACE THE LINKS BELOW WITH DIRECT URLS TO YOUR IMAGES -->
-        <img src="IMG_20251122_063834.jpg" class="bg-slide active" alt="Slide 1">
-        <img src="IMG_20251201_202739.jpg" class="bg-slide" alt="Slide 2">
-        <img src="IMG_20251213_192354.jpg" class="bg-slide" alt="Slide 3">
+        <!-- If you uploaded images named pic1.jpg, pic2.jpg, pic3.jpg, leave these. Otherwise, put your file names here. -->
+        <img src="pic1.jpg" class="bg-slide active" alt="Slide 1">
+        <img src="pic2.jpg" class="bg-slide" alt="Slide 2">
+        <img src="pic3.jpg" class="bg-slide" alt="Slide 3">
     </div>
     <div class="bg-overlay"></div>
 
     <div id="youtubeAudioPlayer"></div>
 
-    <!-- Main Content Container -->
     <div id="mainContent">
-        <h1>Happy 10th Anniversary mylove 😘</h1>
+        <h1>Happy 10th Monthsary! 🥂</h1>
         
         <div class="heart"></div>
 
         <div class="card">
-            <p>ay months pala, 10 months na tayong magkasama, pero grabe, kinikilig pa rin ako sa'yo araw-araw! tas ikaw naman high blood minsan, pero okay lang, love naman naten ang isat isa. Thank you for being my peace, my joy, and my absolute best friend and wifey. Sobrang love kita! 😘❤️</p>
+            <p>10 months na tayong magkasama, pero grabe, kinikilig pa rin ako sa'yo araw-araw! May kasama pang kaunting high blood minsan, pero okay lang, worth it naman. Thank you for being my peace, my joy, and my absolute best friend. Sobrang love kita! 🥰❤️</p>
         </div>
 
         <div class="question-box">
-            <h2>Will you legally bind yourself to a lifetime of eating my cooking, laughing at my bad jokes, and being my permanent date? ❤️</h2>
+            <h2>Will you legally bind yourself to a lifetime of eating my cooking, laughing at my bad jokes, and being my permanent date? 🍳🥺❤️</h2>
             <div class="btn-container">
                 <button class="btn" id="yesBtn" onclick="acceptProposal()">Yes!</button>
-                <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No wala ka choice</button>
+                <button class="btn" id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
             </div>
         </div>
     </div>
 
-    <!-- Hidden Celebration Screen -->
     <div id="celebrationScreen" class="hidden celebration">
         <div class="heart"></div>
         <h1 style="color: var(--success-color);">CONTRACT SIGNED! 💖</h1>
         <div class="card">
-            <p>Sabi ko na nga ba, marupok ka rin sa akin e 😘 No cancellations or refunds allowed. Ikaw na ang official lifetime partner ko sa pagkain at sa buhay. I love you endlessly, lovelove! 😘😘😘</p>
+            <p>Sabi ko na nga ba, marupok ka rin sa akin eh! No cancellations or refunds allowed. Ikaw na ang official lifetime partner ko sa pagkain at sa buhay. I love you endlessly, bff/love! 👩‍❤️‍💋‍👨🔐</p>
         </div>
     </div>
 
     <script>
-        // YouTube API Configuration
         var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
+        tag.src = "https://youtube.com";
         var firstScriptTag = document.getElementsByTagName('script');
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -276,30 +269,27 @@
             });
         }
 
-        // Automatic Background Image Rotator Setup
         let currentSlide = 0;
         const slides = document.querySelectorAll('.bg-slide');
         const slideInterval = 4000;
 
         function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+            if(slides.length > 0) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
         }
         setInterval(nextSlide, slideInterval);
 
-        // Falling Hearts Generator
         function createFallingHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart-fall');
             heart.innerText = '❤️';
-            
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
             heart.style.fontSize = Math.random() * 15 + 15 + 'px';
-            
             document.body.appendChild(heart);
-            
             setTimeout(() => { heart.remove(); }, 5000);
         }
         setInterval(createFallingHeart, 300);
@@ -308,10 +298,8 @@
             const noBtn = document.getElementById('noBtn');
             const maxX = window.innerWidth - noBtn.offsetWidth - 40;
             const maxY = window.innerHeight - noBtn.offsetHeight - 40;
-            
             const randomX = Math.max(20, Math.floor(Math.random() * maxX));
             const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-            
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
